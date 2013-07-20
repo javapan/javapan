@@ -1,0 +1,4 @@
+<factorypath>
+    <factorypathentry kind="WKSPJAR" id="/example/lib/javapan-services.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="WKSPJAR" id="/example/lib/javapan.jar" enabled="true" runInBatchMode="false"/>
+</factorypath>
