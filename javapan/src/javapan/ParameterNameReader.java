@@ -87,7 +87,7 @@ public class ParameterNameReader {
 
 	private static RuntimeException throwException(Class<?> type, AccessibleObject obj, Exception e) {
 		String msg = String.format("cannot find parameter names for %s in %s", obj, type);
-		throw new RuntimeException(msg, e);
+		throw new NotFoundException(msg, e);
 	}
 
 	@SuppressWarnings("unchecked")

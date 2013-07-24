@@ -14,8 +14,5 @@ public final class Main$$javapan {
 	public static final java.util.List<String> bar_1$$$javapan = 
 			java.util.Collections.unmodifiableList(java.util.Arrays.asList("baz"));
 
-	public static final java.util.List<String> main_1$$$javapan = 
-			java.util.Collections.unmodifiableList(java.util.Arrays.asList("args"));
-
 
 }
