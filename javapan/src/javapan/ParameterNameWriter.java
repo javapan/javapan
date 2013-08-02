@@ -149,21 +149,22 @@ public class ParameterNameWriter extends AbstractProcessor {
 	}
 
 	private void writeParamNameFields(PrintWriter pw, Collection<ExecutableElement> elements) {
-		BitSet set = new BitSet();
+		Set<String> writtenFields = new HashSet<String>();
 
 		for (ExecutableElement e : elements) {
-			int numParams = e.getParameters().size();
-			if (set.get(numParams))
-				continue;
-			set.set(numParams);
-
-			writeParamNameField(pw, e);
+			writeParamNameField(pw, e, writtenFields);
 		}
 	}
 
-	private void writeParamNameField(PrintWriter pw, ExecutableElement method) {
+	private void writeParamNameField(PrintWriter pw, ExecutableElement method, Set<String> writtenFields) {
 		List<? extends VariableElement> parameters = method.getParameters();
-		pw.printf("\tpublic static final java.util.List<String> %s = ", getParamFieldName(method));
+		
+		String fieldName = getParamFieldName(method);
+		if(writtenFields.contains(fieldName))
+			return;
+		writtenFields.add(fieldName);
+		
+		pw.printf("\tpublic static final java.util.List<String> %s = ", fieldName);
 
 		if (parameters.isEmpty()) {
 			pw.printf("%n\t\t\tjava.util.Collections.emptyList();%n");

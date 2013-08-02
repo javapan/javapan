@@ -41,8 +41,12 @@ public class Main {
 	public Main(int foo) {
 	}
 
-	public void bar(int baz) {
+	public void method1(int baz) {
 
+	}
+	
+	public void method2(Object o) {
+		
 	}
 
 	public static class NestedClass {
@@ -52,7 +56,6 @@ public class Main {
 
 		public void nestedMethod(char c) {
 		}
-
 	}
 
 	public class InnerClass {
@@ -71,9 +74,13 @@ public class Main {
 			.withParams(int.class)
 			.hasParameterNames("foo");
 
-		assertMethodIn(Main.class, "bar")
+		assertMethodIn(Main.class, "method1")
 			.withParams(int.class)
 			.hasParameterNames("baz");
+		
+		assertMethodIn(Main.class, "method2")
+			.withParams(Object.class)
+			.hasParameterNames("o");
 
 		assertConstructorOf(NestedClass.class)
 			.withParams(String.class)
