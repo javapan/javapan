@@ -35,6 +35,7 @@ import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Collections;
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class ParameterNameReader {
 		}
 
 		String paramClassName = getParamClassName(type);
-		String paramfieldName = getParamFieldName(obj);
+		String paramfieldName = getParamFieldName(obj, type);
 
 		try {
 
@@ -95,18 +96,30 @@ public class ParameterNameReader {
 		return (T) f.get(o);
 	}
 
-	private static String getParamFieldName(AccessibleObject obj) {
+	private static boolean isStaticClassConstructor(AccessibleObject obj, Class<?> type) {
+		if (!(obj instanceof Constructor)) {
+			return false;
+		}
+		if (type.getEnclosingClass() == null) {
+			return false;
+		}
+
+		int mod = type.getModifiers();
+		return !Modifier.isStatic(mod) && !Modifier.isInterface(mod);
+	}
+
+	private static String getParamFieldName(AccessibleObject obj, Class<?> type) {
 		String name = null;
-		int numParams = 0;
+		int numParams = isStaticClassConstructor(obj, type) ? -1 : 0;
 
 		if (obj instanceof Constructor) {
 			Constructor<?> contor = (Constructor<?>) obj;
 			name = "$init$";
-			numParams = contor.getParameterTypes().length;
+			numParams += contor.getParameterTypes().length;
 		} else {
 			Method m = (Method) obj;
 			name = m.getName();
-			numParams = m.getParameterTypes().length;
+			numParams += m.getParameterTypes().length;
 		}
 
 		return String.format("%s_%s$%s", name, numParams, NAME_SUFFIX);
