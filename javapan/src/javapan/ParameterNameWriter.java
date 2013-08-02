@@ -112,9 +112,11 @@ public class ParameterNameWriter extends AbstractProcessor {
 
 		StringReplacer replacer = new StringReplacer();
 		replacer.addVariable("writer.name", ParameterNameWriter.class.getName());
-		if (packageName != null) {
+		if (packageName != null && !packageName.isEmpty()) {
 			String pkgStatement = String.format("package %s;", packageName);
 			replacer.addVariable("package.declaration", pkgStatement);
+		}else {
+			replacer.addVariable("package.declaration", "");
 		}
 		replacer.addVariable("gen.source.file", genSimpleClassName);
 		replacer.addVariable("gen.fields", genFields);
