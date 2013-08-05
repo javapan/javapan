@@ -34,6 +34,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
+import javapan.NotFoundException;
 import javapan.ParameterNameReader;
 
 public class Main {
@@ -44,9 +45,9 @@ public class Main {
 	public void method1(int baz) {
 
 	}
-	
+
 	public void method2(Object o) {
-		
+
 	}
 
 	public static class NestedClass {
@@ -77,7 +78,7 @@ public class Main {
 		assertMethodIn(Main.class, "method1")
 			.withParams(int.class)
 			.hasParameterNames("baz");
-		
+
 		assertMethodIn(Main.class, "method2")
 			.withParams(Object.class)
 			.hasParameterNames("o");
@@ -97,6 +98,10 @@ public class Main {
 		assertMethodIn(InnerClass.class, "innerMethod")
 			.withParams(byte.class)
 			.hasParameterNames("b");
+
+		assertConstructorOf(ExcludedType.class)
+			.withParams(Main.class)
+			.isNotProcessed();
 
 		System.out.println("it works!");
 	}
@@ -127,14 +132,26 @@ public class Main {
 		}
 
 		public void hasParameterNames(String... expected) throws Exception {
+			List<String> parameterNames = getParameterNames();
+			assertEquals(parameterNames, expected);
+		}
+
+		public List<String> getParameterNames() throws Exception {
 			if (methodName != null) {
 				Method method = type.getMethod(methodName, params);
-				List<String> parameterNames = ParameterNameReader.getParameterNames(method);
-				assertEquals(parameterNames, expected);
+				return ParameterNameReader.getParameterNames(method);
 			} else {
 				Constructor<?> contor = type.getConstructor(params);
-				List<String> parameterNames = ParameterNameReader.getParameterNames(contor);
-				assertEquals(parameterNames, expected);
+				return ParameterNameReader.getParameterNames(contor);
+			}
+		}
+
+		public void isNotProcessed() throws Exception {
+			try {
+				List<String> parameterNames = getParameterNames();
+				throw new IllegalStateException("is processed:" + parameterNames);
+			} catch (NotFoundException ignore) {
+				
 			}
 		}
 	}
