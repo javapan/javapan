@@ -47,16 +47,27 @@ public class ParameterNameWriter extends AbstractProcessor {
 
 	private Filer filer;
 
+	private final TypeFilter typeFilter = new TypeFilter();
+
 	@Override
 	public synchronized void init(ProcessingEnvironment processingEnv) {
 		super.init(processingEnv);
 		elementUtils = processingEnv.getElementUtils();
 		filer = processingEnv.getFiler();
+
+		typeFilter.initValues(processingEnv);
 	}
 
 	@Override
 	public SourceVersion getSupportedSourceVersion() {
 		return SourceVersion.latest();
+	}
+
+	@Override
+	public Set<String> getSupportedOptions() {
+		Set<String> optionKeys = new HashSet<String>();
+		typeFilter.addKeysTo(optionKeys);
+		return optionKeys;
 	}
 
 	@Override
@@ -70,6 +81,11 @@ public class ParameterNameWriter extends AbstractProcessor {
 		Collection<? extends TypeElement> typeElements = ElementFilter.typesIn(rootElements);
 
 		for (TypeElement type : typeElements) {
+			if (!typeFilter.isIncluded(type)) {
+				System.out.println("excluded " + this.elementUtils.getBinaryName(type));
+				continue;
+			}
+
 			processElements(type.getEnclosedElements());
 			processType(type);
 		}
@@ -115,7 +131,7 @@ public class ParameterNameWriter extends AbstractProcessor {
 		if (packageName != null && !packageName.isEmpty()) {
 			String pkgStatement = String.format("package %s;", packageName);
 			replacer.addVariable("package.declaration", pkgStatement);
-		}else {
+		} else {
 			replacer.addVariable("package.declaration", "");
 		}
 		replacer.addVariable("gen.source.file", genSimpleClassName);
@@ -158,14 +174,15 @@ public class ParameterNameWriter extends AbstractProcessor {
 		}
 	}
 
-	private void writeParamNameField(PrintWriter pw, ExecutableElement method, Set<String> writtenFields) {
+	private void writeParamNameField(PrintWriter pw, ExecutableElement method,
+			Set<String> writtenFields) {
 		List<? extends VariableElement> parameters = method.getParameters();
-		
+
 		String fieldName = getParamFieldName(method);
-		if(writtenFields.contains(fieldName))
+		if (writtenFields.contains(fieldName))
 			return;
 		writtenFields.add(fieldName);
-		
+
 		pw.printf("\tpublic static final java.util.List<String> %s = ", fieldName);
 
 		if (parameters.isEmpty()) {
