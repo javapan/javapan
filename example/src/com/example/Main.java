@@ -29,14 +29,6 @@ THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.example;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.List;
-
-import javapan.NotFoundException;
-import javapan.ParameterNameReader;
-
 public class Main {
 
 	public Main(int foo) {
@@ -69,98 +61,4 @@ public class Main {
 		}
 	}
 
-	public static void main(String[] args) throws Exception {
-
-		assertConstructorOf(Main.class)
-			.withParams(int.class)
-			.hasParameterNames("foo");
-
-		assertMethodIn(Main.class, "method1")
-			.withParams(int.class)
-			.hasParameterNames("baz");
-
-		assertMethodIn(Main.class, "method2")
-			.withParams(Object.class)
-			.hasParameterNames("o");
-
-		assertConstructorOf(NestedClass.class)
-			.withParams(String.class)
-			.hasParameterNames("s");
-
-		assertMethodIn(NestedClass.class, "nestedMethod")
-			.withParams(char.class)
-			.hasParameterNames("c");
-
-		assertConstructorOf(InnerClass.class)
-			.withParams(Main.class, long.class)
-			.hasParameterNames("l");
-
-		assertMethodIn(InnerClass.class, "innerMethod")
-			.withParams(byte.class)
-			.hasParameterNames("b");
-
-		if(!Boolean.getBoolean("example.isMavenBuild")) {
-			assertConstructorOf(ExcludedType.class)
-				.withParams(Main.class)
-				.isNotProcessed();
-		}
-
-		System.out.println("it works!");
-	}
-
-	private static ParamNameAssertion assertConstructorOf(Class<?> type) {
-		ParamNameAssertion pna = new ParamNameAssertion();
-		pna.type = type;
-		return pna;
-	}
-
-	private static ParamNameAssertion assertMethodIn(Class<?> type, String methodName) {
-		ParamNameAssertion pna = new ParamNameAssertion();
-		pna.type = type;
-		pna.methodName = methodName;
-		return pna;
-	}
-
-	@SuppressWarnings("rawtypes")
-	private static class ParamNameAssertion {
-		private Class<?> type;
-		private String methodName;
-
-		private Class[] params;
-
-		public ParamNameAssertion withParams(Class... params) {
-			this.params = params;
-			return this;
-		}
-
-		public void hasParameterNames(String... expected) throws Exception {
-			List<String> parameterNames = getParameterNames();
-			assertEquals(parameterNames, expected);
-		}
-
-		public List<String> getParameterNames() throws Exception {
-			if (methodName != null) {
-				Method method = type.getMethod(methodName, params);
-				return ParameterNameReader.getParameterNames(method);
-			} else {
-				Constructor<?> contor = type.getConstructor(params);
-				return ParameterNameReader.getParameterNames(contor);
-			}
-		}
-
-		public void isNotProcessed() throws Exception {
-			try {
-				List<String> parameterNames = getParameterNames();
-				throw new IllegalStateException("is processed:" + parameterNames);
-			} catch (NotFoundException ignore) {
-				
-			}
-		}
-	}
-
-	private static void assertEquals(List<String> a, String... b) {
-		if (!Arrays.asList(b).equals(a)) {
-			throw new IllegalStateException("not working... " + a);
-		}
-	}
 }
