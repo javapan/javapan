@@ -19,6 +19,7 @@
 
 	<build>
 		<sourceDirectory>src</sourceDirectory>
+		<testSourceDirectory>tests</testSourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -78,8 +79,14 @@
 	<dependencies>
 		<dependency>
 			<groupId>javapan</groupId>
-			<artifactId>javapan-all</artifactId>
+			<artifactId>javapan</artifactId>
 			<version>${JAVAPAN_LIB_VERSION}</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+      <scope>test</scope>
 		</dependency>
 	</dependencies>
 
