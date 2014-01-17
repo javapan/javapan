@@ -99,9 +99,11 @@ public class Main {
 			.withParams(byte.class)
 			.hasParameterNames("b");
 
-		assertConstructorOf(ExcludedType.class)
-			.withParams(Main.class)
-			.isNotProcessed();
+		if(!Boolean.getBoolean("example.isMavenBuild")) {
+			assertConstructorOf(ExcludedType.class)
+				.withParams(Main.class)
+				.isNotProcessed();
+		}
 
 		System.out.println("it works!");
 	}
