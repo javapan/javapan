@@ -1,0 +1,86 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>javapan</groupId>
+	<artifactId>example</artifactId>
+	<version>0.0.2-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>javapan-example</name>
+	<url>http://github.com/javapan/javapan</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<JAVA_SOURCE_SDK_VERSION>1.6</JAVA_SOURCE_SDK_VERSION>
+		<JAVA_TARGET_SDK_VERSION>1.6</JAVA_TARGET_SDK_VERSION>
+		<JAVAPAN_LIB_VERSION>0.0.1-SNAPSHOT</JAVAPAN_LIB_VERSION>
+	</properties>
+
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${JAVA_SOURCE_SDK_VERSION}</source>
+					<target>${JAVA_TARGET_SDK_VERSION}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>hack-binary</id>
+						<phase>validate</phase>
+						<configuration>
+							<file>${basedir}/../javapan/target/javapan-${JAVAPAN_LIB_VERSION}-all.jar</file>
+							<repositoryLayout>default</repositoryLayout>
+							<groupId>javapan</groupId>
+							<artifactId>javapan-all</artifactId>
+							<version>${JAVAPAN_LIB_VERSION}</version>
+							<packaging>jar</packaging>
+							<generatePom>true</generatePom>
+						</configuration>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>com.example.Main</mainClass>
+						</manifest>
+					</archive>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>javapan</groupId>
+			<artifactId>javapan-all</artifactId>
+			<version>${JAVAPAN_LIB_VERSION}</version>
+		</dependency>
+	</dependencies>
+
+</project>

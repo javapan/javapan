@@ -17,6 +17,8 @@ This is accomplished via a JSR-269 annotation processing compiler plug-in.
    C:\workspace\example>java -cp bin;lib\javapan.jar;lib\javapan-services.jar example.Main
    it works!
    
+  There is also a test.bat in example project that runs the entire pipeline.
+  
 3. Eclipse Build
   If you build and run your code with Eclipse, you need to do the following after performing step 2b.
   
@@ -29,7 +31,16 @@ This is accomplished via a JSR-269 annotation processing compiler plug-in.
   Using "Add JARS" or "Add External JARS", add javapan.jar and javapan-services.jar
   
   Re-build your project.
+
+4. Maven Build
+  To build javapan library, run:
+  	C:\workspace\javapan>mvn clean install
+
+  To build example project, run:
+        C:\workspace\example>mvn clean install
+
+  There is also a test_maven.bat in example project that runs the entire pipeline using maven.
   
-4. Bugs & Known Issues
+5. Bugs & Known Issues
   JAVAPAN currently does not work very well with overloaded methods/constructors. It may not return correct parameter names
   for a method at runtime if the class contains another method with the same name and same number of parameters.
