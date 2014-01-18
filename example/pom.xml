@@ -37,10 +37,10 @@
 						<id>hack-binary</id>
 						<phase>validate</phase>
 						<configuration>
-							<file>${basedir}/../javapan/target/javapan-${JAVAPAN_LIB_VERSION}-all.jar</file>
+							<file>${basedir}/../javapan/target/javapan-${JAVAPAN_LIB_VERSION}-services.jar</file>
 							<repositoryLayout>default</repositoryLayout>
 							<groupId>javapan</groupId>
-							<artifactId>javapan-all</artifactId>
+							<artifactId>javapan-services</artifactId>
 							<version>${JAVAPAN_LIB_VERSION}</version>
 							<packaging>jar</packaging>
 							<generatePom>true</generatePom>
@@ -80,6 +80,11 @@
 		<dependency>
 			<groupId>javapan</groupId>
 			<artifactId>javapan</artifactId>
+			<version>${JAVAPAN_LIB_VERSION}</version>
+		</dependency>
+		<dependency>
+			<groupId>javapan</groupId>
+			<artifactId>javapan-services</artifactId>
 			<version>${JAVAPAN_LIB_VERSION}</version>
 		</dependency>
 		<dependency>
