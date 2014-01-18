@@ -64,20 +64,12 @@ public class Tests {
 			.hasParameterNames("c");
 
 		assertConstructorOf(Main.InnerClass.class)
-			.withParams(Tests.class, long.class)
+			.withParams(Main.class, long.class)
 			.hasParameterNames("l");
 
 		assertMethodIn(Main.InnerClass.class, "innerMethod")
 			.withParams(byte.class)
 			.hasParameterNames("b");
-
-		if(!Boolean.getBoolean("example.isMavenBuild")) {
-			assertConstructorOf(ExcludedType.class)
-				.withParams(Tests.class)
-				.isNotProcessed();
-		}
-
-		System.out.println("it works!");
 	}
 
 	private static ParamNameAssertion assertConstructorOf(Class<?> type) {
