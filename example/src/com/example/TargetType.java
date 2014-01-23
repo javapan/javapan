@@ -29,9 +29,9 @@ THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.example;
 
-public class Main {
+public class TargetType {
 
-	public Main(int foo) {
+	public TargetType(int foo) {
 	}
 
 	public void method1(int baz) {

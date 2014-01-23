@@ -31,7 +31,7 @@ package com.example;
 
 public class ExcludedType {
 
-	public ExcludedType(Main main) {
+	public ExcludedType(Object obj) {
 	}
 
 }

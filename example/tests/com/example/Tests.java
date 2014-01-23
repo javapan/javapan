@@ -43,31 +43,31 @@ public class Tests {
     @Test
 	public void tests() throws Exception {
 
-		assertConstructorOf(Main.class)
+		assertConstructorOf(TargetType.class)
 			.withParams(int.class)
 			.hasParameterNames("foo");
 
-		assertMethodIn(Main.class, "method1")
+		assertMethodIn(TargetType.class, "method1")
 			.withParams(int.class)
 			.hasParameterNames("baz");
 
-		assertMethodIn(Main.class, "method2")
+		assertMethodIn(TargetType.class, "method2")
 			.withParams(Object.class)
 			.hasParameterNames("o");
 
-		assertConstructorOf(Main.NestedClass.class)
+		assertConstructorOf(TargetType.NestedClass.class)
 			.withParams(String.class)
 			.hasParameterNames("s");
 
-		assertMethodIn(Main.NestedClass.class, "nestedMethod")
+		assertMethodIn(TargetType.NestedClass.class, "nestedMethod")
 			.withParams(char.class)
 			.hasParameterNames("c");
 
-		assertConstructorOf(Main.InnerClass.class)
-			.withParams(Main.class, long.class)
+		assertConstructorOf(TargetType.InnerClass.class)
+			.withParams(TargetType.class, long.class)
 			.hasParameterNames("l");
 
-		assertMethodIn(Main.InnerClass.class, "innerMethod")
+		assertMethodIn(TargetType.InnerClass.class, "innerMethod")
 			.withParams(byte.class)
 			.hasParameterNames("b");
 	}
