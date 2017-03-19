@@ -1,6 +1,6 @@
 JAVAPAN
 
-JAVAPAN is a java library that provides the ability to reflectively access method/constructor parameter names.
+JAVAPAN is a java library that provides the ability to reflectively access method/constructor parameter names for Java 6+
 This is accomplished via a JSR-269 annotation processing compiler plug-in.
 
 1. Dependencies
@@ -12,9 +12,9 @@ This is accomplished via a JSR-269 annotation processing compiler plug-in.
  c. access the paramter names at runtime using javapan.ParameterNameReader class
  
  Example:
-   C:\workspace\example>javac -cp .;lib\javapan.jar;lib\javapan-services.jar -d bin src\example\*.java
+   C:\workspace\example>javac -cp .;lib\javapan.jar;lib\javapan-services.jar -d bin src\com\example\*.java
 
-   C:\workspace\example>java -cp bin;lib\javapan.jar;lib\javapan-services.jar example.Main
+   C:\workspace\example>java -cp bin;lib\javapan.jar;lib com.example.Main
    it works!
    
   There is also a test_cli.bat in example project that runs the entire pipeline.
