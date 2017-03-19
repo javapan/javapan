@@ -38,6 +38,9 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 public class Tests {
 
     @Test
@@ -70,7 +73,18 @@ public class Tests {
 		assertMethodIn(TargetType.InnerClass.class, "innerMethod")
 			.withParams(byte.class)
 			.hasParameterNames("b");
-	}
+
+        try {
+            assertConstructorOf(TargetType.class)
+                    .withParams(int.class)
+                    .hasParameterNames("dslkfjsldkjflsdkjf");
+            fail("should have barfed");
+        } catch (AssertionError e) {
+            assertEquals(e.getMessage(), "expected:<[foo]> but was:<[dslkfjsldkjflsdkjf]>");
+        }
+
+
+    }
 
 	private static ParamNameAssertion assertConstructorOf(Class<?> type) {
 		ParamNameAssertion pna = new ParamNameAssertion();
@@ -99,7 +113,7 @@ public class Tests {
 
 		public void hasParameterNames(String... expected) throws Exception {
 			List<String> parameterNames = getParameterNames();
-			assertEquals(parameterNames, expected);
+			assertEquals(parameterNames, Arrays.asList(expected));
 		}
 
 		public List<String> getParameterNames() throws Exception {
@@ -119,12 +133,6 @@ public class Tests {
 			} catch (NotFoundException ignore) {
 				
 			}
-		}
-	}
-
-	private static void assertEquals(List<String> a, String... b) {
-		if (!Arrays.asList(b).equals(a)) {
-			throw new IllegalStateException("not working... " + a);
 		}
 	}
 }
