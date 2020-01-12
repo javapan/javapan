@@ -8,8 +8,31 @@
 	<packaging>jar</packaging>
 
 	<name>javapan-example</name>
+	<description>Reflective access to method parameter names for Java 6+</description>
 	<url>http://github.com/javapan/javapan</url>
-
+	
+	<licenses>
+		<license>
+			<name>The 3-Clause BSD License</name>
+			<url>https://opensource.org/licenses/BSD-3-Clause</url>
+		</license>
+	</licenses>
+	
+	<developers>
+		<developer>
+			<name>maxxedev</name>
+			<email>5051664+maxxedev@users.noreply.github.com</email>
+			<organization>None</organization>
+			<organizationUrl>https://github.com/maxxedev/javapan</organizationUrl>
+		</developer>
+	</developers>
+	
+	<scm>
+		<connection>scm:git:git://github.com/maxxedev/javapan.git</connection>
+		<developerConnection>scm:git:ssh://github.com:maxxedev/javapan.git</developerConnection>
+		<url>http://github.com/maxxedev/javapan/tree/master</url>
+	</scm>
+	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<JAVA_SOURCE_SDK_VERSION>1.6</JAVA_SOURCE_SDK_VERSION>
