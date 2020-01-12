@@ -37,7 +37,7 @@
 	
 	<scm>
 		<connection>scm:git:git://github.com/maxxedev/javapan.git</connection>
-		<developerConnection>scm:git:ssh://github.com:maxxedev/javapan.git</developerConnection>
+		<developerConnection>scm:git:https://github.com/maxxedev/javapan.git</developerConnection>
 		<url>http://github.com/maxxedev/javapan/tree/master</url>
 	</scm>
 	
