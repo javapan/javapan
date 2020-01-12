@@ -1,3 +1,7 @@
 .metadata
 z*
 target
+**/.project
+**/.classpath
+**/.factorypath
+**/.settings
