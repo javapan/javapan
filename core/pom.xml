@@ -18,6 +18,14 @@
 		</license>
 	</licenses>
 	
+	<distributionManagement>
+		<repository>
+			<id>bintray-maxxedev-javapan</id>
+			<name>maxxedev-javapan</name>
+			<url>https://api.bintray.com/maven/maxxedev/javapan/javapan/;publish=1</url>
+		</repository>
+	</distributionManagement>
+	
 	<developers>
 		<developer>
 			<name>maxxedev</name>
